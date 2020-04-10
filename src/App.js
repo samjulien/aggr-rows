@@ -31,6 +31,7 @@ class App extends Component {
         {
           headerName: "Acct Name",
           field: "accountName",
+          colId: "accountName",
         },
         {
           headerName: "Date Opened",
@@ -43,12 +44,18 @@ class App extends Component {
           headerName: "Amount",
           field: "amount",
           width: 140,
+          comparator: (valueA, valueB) => {
+            return +valueA - +valueB;
+          },
         },
       ],
       defaultColDef: {
         resizable: true,
+        sortable: true,
       },
       rowData: [],
+      sortingOrder: ["desc", "asc", null],
+      multiSortKey: "ctrl",
     };
   }
 
@@ -64,17 +71,35 @@ class App extends Component {
     this.gridApi.sizeColumnsToFit();
   };
 
+  sortByAccountAndName = () => {
+    const sort = [
+      {
+        colId: "accountName",
+        sort: "asc",
+      },
+      {
+        colId: "lastName",
+        sort: "asc",
+      },
+    ];
+
+    this.gridApi.setSortModel(sort);
+  };
+
   render() {
     return (
       <div
         className="ag-theme-balham"
         style={{ height: "450px", width: "99%" }}
       >
+        <button type="button" onClick={this.sortByAccountAndName}>Sort By Account and Last Name</button>
         <AgGridReact
           onGridReady={this.onGridReady}
           columnDefs={this.state.columnDefs}
           rowData={this.state.rowData}
           defaultColDef={this.state.defaultColDef}
+          sortingOrder={this.state.sortingOrder}
+          multiSortKey={this.state.multiSortKey}
         ></AgGridReact>
       </div>
     );
