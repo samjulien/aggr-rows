@@ -43,15 +43,10 @@ class App extends Component {
           headerName: "Amount",
           field: "amount",
           width: 140,
-          valueFormatter: function (params) {
-            // Add a trailing zero
-            return params.value.toFixed(2);
-          },
         },
       ],
       defaultColDef: {
         resizable: true,
-        sortable: true,
       },
       rowData: [],
     };

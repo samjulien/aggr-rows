@@ -14,7 +14,7 @@ module.exports = () => {
       accountNumber: faker.finance.account(),
       dateOpened: faker.date.past(),
       accountName: faker.finance.accountName(),
-      amount: +faker.finance.amount(),
+      amount: faker.finance.amount(),
     });
   }
 
