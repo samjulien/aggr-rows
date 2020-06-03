@@ -92,7 +92,9 @@ class App extends Component {
         className="ag-theme-balham"
         style={{ height: "450px", width: "99%" }}
       >
-        <button type="button" onClick={this.sortByAccountAndName}>Sort By Account and Last Name</button>
+        <button type="button" onClick={this.sortByAccountAndName}>
+          Sort By Account and Last Name
+        </button>
         <AgGridReact
           onGridReady={this.onGridReady}
           columnDefs={this.state.columnDefs}
