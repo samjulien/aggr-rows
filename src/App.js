@@ -14,6 +14,7 @@ class App extends Component {
           field: "id",
           width: 80,
           lockPosition: true,
+          rowDrag: true,
         },
         {
           headerName: "First",
@@ -56,6 +57,9 @@ class App extends Component {
       rowData: [],
       sortingOrder: ["desc", "asc", null],
       multiSortKey: "ctrl",
+      rowDragManaged: true,
+      animateRows: true,
+      suppressRowDrag: false,
     };
   }
 
@@ -65,10 +69,20 @@ class App extends Component {
       .then((rowData) => this.setState({ rowData }));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.suppressRowDrag !== this.state.suppressRowDrag) {
+      this.gridApi.setSuppressRowDrag(this.state.suppressRowDrag);
+    }
+  }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
+  };
+
+  toggleRowDrag = () => {
+    this.setState({ suppressRowDrag: !this.state.suppressRowDrag });
   };
 
   sortByAccountAndName = () => {
@@ -95,6 +109,9 @@ class App extends Component {
         <button type="button" onClick={this.sortByAccountAndName}>
           Sort By Account and Last Name
         </button>
+        <button type="button" onClick={this.toggleRowDrag}>
+          Toggle Row Drag
+        </button>
         <AgGridReact
           onGridReady={this.onGridReady}
           columnDefs={this.state.columnDefs}
@@ -102,6 +119,8 @@ class App extends Component {
           defaultColDef={this.state.defaultColDef}
           sortingOrder={this.state.sortingOrder}
           multiSortKey={this.state.multiSortKey}
+          rowDragManaged={this.state.rowDragManaged}
+          animateRows={this.state.animateRows}
         ></AgGridReact>
       </div>
     );
