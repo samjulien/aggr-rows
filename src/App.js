@@ -15,6 +15,7 @@ class App extends Component {
           width: 80,
           lockPosition: true,
           rowDrag: true,
+          checkboxSelection: true,
         },
         {
           headerName: "First",
@@ -60,6 +61,7 @@ class App extends Component {
       rowDragManaged: true,
       animateRows: true,
       suppressRowDrag: false,
+      pinnedTopRowData: [],
     };
   }
 
@@ -100,6 +102,11 @@ class App extends Component {
     this.gridApi.setSortModel(sort);
   };
 
+  onSelectionChanged = () => {
+    const selected = this.gridApi.getSelectedRows();
+    this.gridApi.setPinnedBottomRowData(selected);
+  };
+
   render() {
     return (
       <div
@@ -121,6 +128,8 @@ class App extends Component {
           multiSortKey={this.state.multiSortKey}
           rowDragManaged={this.state.rowDragManaged}
           animateRows={this.state.animateRows}
+          pinnedTopRowData={this.state.pinnedTopRowData}
+          onSelectionChanged={this.onSelectionChanged}
         ></AgGridReact>
       </div>
     );
