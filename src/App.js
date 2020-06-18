@@ -62,6 +62,10 @@ class App extends Component {
       animateRows: true,
       suppressRowDrag: false,
       pinnedTopRowData: [],
+      rowHeight: 40,
+      getRowHeight: (params) => {
+        return params.node.data.amount > 500 ? 50 : 30;
+      },
     };
   }
 
@@ -130,6 +134,8 @@ class App extends Component {
           animateRows={this.state.animateRows}
           pinnedTopRowData={this.state.pinnedTopRowData}
           onSelectionChanged={this.onSelectionChanged}
+          rowHeight={this.state.rowHeight}
+          getRowHeight={this.state.getRowHeight}
         ></AgGridReact>
       </div>
     );
